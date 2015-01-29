@@ -162,7 +162,7 @@ public class MainActivity extends Activity {
 	    int interval = 300000;
 
 	    aManager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), interval, pIntent);
-	    Log.v("VERBOSE", "Alarm Set");
+	    //Log.v("VERBOSE", "Alarm Set");
 	}
 	
 	

@@ -138,12 +138,12 @@ public class FeatureCollector extends IntentService {
 		//bytes sent/received
 		long bytesReceived = TrafficStats.getMobileRxBytes();
 		long bytesTransmitted = TrafficStats.getMobileTxBytes();
-		if (bytesReceived - db.getLastBytesReceived() >= 0){
+		/*if (bytesReceived - db.getLastBytesReceived() >= 0){
 			bytesReceived = bytesReceived - db.getLastBytesReceived();
 		}
 		if (bytesTransmitted - db.getLastBytesTransmitted() >= 0){
 			bytesTransmitted = bytesTransmitted - db.getLastBytesTransmitted();
-		}
+		}*/
 		
 		//record
 		db.recordFeatures(new CollectionInstance(packageName, numberOfRunningApplications,
