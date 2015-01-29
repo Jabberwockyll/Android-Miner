@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/home/polyarch/AndroidStudioProjects/URF/app/src/main/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="black">#000000</color>
+    <color name="black_overlay">#66000000</color>
+    <color name="dark_gray">#696969</color>
+    <color name="light_gray">#E8E8E8</color>
+    <color name="pale_green">#98FB98</color>
+    <color name="silver">#C0C0C0</color>
+    <color name="teal">#008080</color>
+    <color name="white">#FFFFFF</color>
+    <!-- From: file:/home/polyarch/AndroidStudioProjects/URF/app/src/main/res/values/dimens.xml -->
+    <eat-comment/>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="none">0dp</dimen>
+    <dimen name="small">8dp</dimen>
+    <dimen name="smallBottom">8dp</dimen>
+    <!-- From: file:/home/polyarch/AndroidStudioProjects/URF/app/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="Day">Day</string>
+    <string name="Time">Time</string>
+    <string name="action_settings">Settings</string>
+    <string name="activityList">Activities</string>
+    <string name="app_name">Collector</string>
+    <string name="collectButton">Collect</string>
+    <string name="endOfDay">End of Day</string>
+    <string name="generate">Generate Results</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="latitudeLabel">Latitude</string>
+    <string name="longitudeHint">Longitude</string>
+    <string name="map">Map</string>
+    <string name="movingLabel">Moving</string>
+    <string name="providerLabel">Provider</string>
+    <string name="results">Results will appear here</string>
+    <string name="showresults">Visualize Results</string>
+    <string name="start">Start</string>
+    <string name="startservice">Start Service</string>
+    <string name="stop">Stop</string>
+    <string name="stopservice">Stop Service</string>
+    <string name="writeButton">Write to file</string>
+    <!-- From: file:/home/polyarch/AndroidStudioProjects/URF/app/src/main/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+</resources>

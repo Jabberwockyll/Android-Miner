@@ -1,0 +1,2 @@
+/home/polyarch/AndroidStudioProjects/URF/app/build/intermediates/classes/debug
+/home/polyarch/AndroidStudioProjects/URF/app/build/intermediates/pre-dexed/debug/support-v4-19.1.0-4a8ffbdb2412e93c138f10c104876a2e0733964d.jar
