@@ -18,6 +18,7 @@ public class CollectionInstance {
 	String connections;
 	long bytesReceived;
 	long bytesTransmitted;
+    int totalSMSReceived;
 
 	public CollectionInstance() {
 		super();
@@ -26,7 +27,7 @@ public class CollectionInstance {
 			String appsRunning, String orientation, double latitude, 
 			double longitude, String address, long availableMemory,
 			String charger, float battery, String networks, String connections,
-			long bytesReceived, long bytesTransmitted) {
+			long bytesReceived, long bytesTransmitted, int totalSMSReceived) {
 		super();
 		this.foregroundApp = foregroundApp;
 		this.numberOfRunningApps = numberOfRunningApps;
@@ -42,12 +43,13 @@ public class CollectionInstance {
 		this.connections = connections;
 		this.bytesReceived = bytesReceived;
 		this.bytesTransmitted = bytesTransmitted;
+        this.totalSMSReceived = totalSMSReceived;
 	}
 	public CollectionInstance(int id, String foregroundApp,
 			int numberOfRunningApps, String appsRunning, String orientation,
 			double latitude, double longitude, String address,  long availableMemory,
 			String charger, float battery, String networks, String connections,
-			long bytesReceived, long bytesTransmitted) {
+			long bytesReceived, long bytesTransmitted, int totalSMSReceived) {
 		super();
 		this.id = id;
 		this.foregroundApp = foregroundApp;
@@ -64,6 +66,7 @@ public class CollectionInstance {
 		this.connections = connections;
 		this.bytesReceived = bytesReceived;
 		this.bytesTransmitted = bytesTransmitted;
+        this.totalSMSReceived = totalSMSReceived;
 	}
 	public int getId() {
 		return id;
@@ -163,5 +166,12 @@ public class CollectionInstance {
 	public void setBytesTransmitted(long bytesTransmitted) {
 		this.bytesTransmitted = bytesTransmitted;
 	}
-	
+
+    public int getTotalSMSReceived() {
+        return totalSMSReceived;
+    }
+
+    public void setTotalSMSReceived(int totalSMSReceived) {
+        this.totalSMSReceived = totalSMSReceived;
+    }
 }

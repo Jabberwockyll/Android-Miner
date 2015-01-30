@@ -8,15 +8,19 @@ import android.app.ActivityManager;
 import android.app.IntentService;
 import android.app.ActivityManager.MemoryInfo;
 import android.app.ActivityManager.RunningTaskInfo;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.TrafficStats;
 import android.os.BatteryManager;
+import android.provider.Telephony;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -138,18 +142,35 @@ public class FeatureCollector extends IntentService {
 		//bytes sent/received
 		long bytesReceived = TrafficStats.getMobileRxBytes();
 		long bytesTransmitted = TrafficStats.getMobileTxBytes();
-		/*if (bytesReceived - db.getLastBytesReceived() >= 0){
+		if (bytesReceived - db.getLastBytesReceived() >= 0){
 			bytesReceived = bytesReceived - db.getLastBytesReceived();
 		}
 		if (bytesTransmitted - db.getLastBytesTransmitted() >= 0){
 			bytesTransmitted = bytesTransmitted - db.getLastBytesTransmitted();
-		}*/
+		}
+        Log.v("Last Bytes Received: ", db.getLastBytesReceived() + "\n");
+        Log.v("Last Bytes Transmitted: ", db.getLastBytesTransmitted() + "\n");
+
+        //total SMS received
+        TelephonyManager telephonyManager = (TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
+        ContentResolver cr = getContentResolver();
+        Cursor c = cr.query(Telephony.Sms.Inbox.CONTENT_URI,
+                new String[] {Telephony.Sms.Inbox.BODY},
+                null,
+                null,
+                Telephony.Sms.Inbox.DEFAULT_SORT_ORDER);
+        int totalSMSReceived = c.getCount();
+        if (totalSMSReceived - db.getLastTotalSMSReceived() >= 0){
+            bytesTransmitted = totalSMSReceived - db.getLastTotalSMSReceived();
+        }
+        c.close();
+        Log.v("Last SMS Received Count: ", db.getLastTotalSMSReceived() + "\n");
 		
 		//record
 		db.recordFeatures(new CollectionInstance(packageName, numberOfRunningApplications,
 				runningApplications, orientation, latitude, longitude, address, 
 				availableMemory, charger, battery, networks, connections, bytesReceived,
-				bytesTransmitted));
+				bytesTransmitted, totalSMSReceived));
 		
 		
 		List<CollectionInstance> records = db.getAllRecords();
@@ -173,6 +194,7 @@ public class FeatureCollector extends IntentService {
 			Log.v("Connections: ",records.get(i).getConnections() + "\n");
 			Log.v("Bytes Received: ",records.get(i).getBytesReceived() + "\n");
 			Log.v("Bytes Transmitted: ",records.get(i).getBytesTransmitted() + "\n");
+            Log.v("Total SMS Received: ",records.get(i).getTotalSMSReceived() + "\n");
 		}
 	}
 }

@@ -119,7 +119,7 @@ public class MainActivity extends Activity {
 					 timeOff.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);*/
 				
 				// test func 
-				//activities.setText(getCurrentlyRunningProccessesOfDevice());
+				activities.setText(getCurrentlyRunningProccessesOfDevice());
 				//String temp = getCurrentlyRunningProccessesOfDevice();
 				
 				//startService(new Intent(getBaseContext(),ListenSmsMmsService.class));
@@ -191,28 +191,29 @@ public class MainActivity extends Activity {
 	 */
 	private String getCurrentlyRunningProccessesOfDevice(){
 		String info = "";
-		/*TelephonyManager telephonyManager = (TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
+		TelephonyManager telephonyManager = (TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
 		//CellInfoGsm cellinfogsm = (CellInfoGsm)telephonyManager.getAllCellInfo()
 		//CellSignalStrengthGsm cellSignalStrengthGsm = cellinfogsm.getCellSignalStrength();
 		//info = ("gsm strnegth: " + cellSignalStrengthGsm.getDbm());
-		info = telephonyManager.getAllCellInfo().toString();
+		//info = telephonyManager.getAllCellInfo().toString();
 		List<String> lstSms = new ArrayList<String>();
 		ContentResolver cr = getContentResolver();
-		Cursor c = cr.query(Telephony.Sms.Conversations.CONTENT_URI, 
-				new String[] {Telephony.Sms.Conversations.BODY},
+		Cursor c = cr.query(Telephony.Sms.Inbox.CONTENT_URI,
+				new String[] {Telephony.Sms.Inbox.BODY},
 				null,
 				null,
-				Telephony.Sms.Conversations.DEFAULT_SORT_ORDER);
+				Telephony.Sms.Inbox.DEFAULT_SORT_ORDER);
 		int totalSMS = c.getCount();
 		
 		if (c.moveToFirst()){
-			for (int i = 0; i < 2; i++) {
+			for (int i = 0; i < 10; i++) {
 				lstSms.add(c.getString(0));
 				c.moveToNext();
 			}
 		}
 		c.close();
-		//info = (totalSMS + " " + Telephony.Sms.Conversations.MESSAGE_COUNT + "\n\n" + lstSms.toString());
+		info = (totalSMS + " "  + "\n\n" + lstSms.toString());
+
 		//SensorManager sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
 	    /*Sensor lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
 	    SensorEventListener listener = new SensorEventListener() {

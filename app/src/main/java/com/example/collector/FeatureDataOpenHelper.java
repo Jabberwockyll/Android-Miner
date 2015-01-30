@@ -17,7 +17,8 @@ public class FeatureDataOpenHelper extends SQLiteOpenHelper {
 	private static final int DATABASE_VERSION = 1;
 	private static final String DATABASE_NAME = "FeaturesData.db";
     private static final String TABLE_FEATURES = "Features";
-	
+
+    //Don't forget underscores!!!
 	private static final String KEY_ID = "ID";
 	private static final String KEY_FOREGROUND_APP = "Foreground_App";
 	private static final String KEY_NUMBER_APPS_RUNNING = "Number_of_Apps_Running";
@@ -33,6 +34,7 @@ public class FeatureDataOpenHelper extends SQLiteOpenHelper {
 	private static final String KEY_CONNECTIONS = "Network_Connection_Status";
 	private static final String KEY_BYTES_RECEIVED = "Bytes_Received";
 	private static final String KEY_BYTES_TRANSMITTED = "Bytes_Transmitted";
+    private static final String KEY_RECEIVED_SMS = "Received_SMS";
 	
 	
     private static final String FEATURE_TABLE_CREATE =
@@ -48,7 +50,7 @@ public class FeatureDataOpenHelper extends SQLiteOpenHelper {
                 KEY_CHARGER + " TEXT, " + KEY_BATTERY + " REAL, " + KEY_NETWORKS +
                 " TEXT, " + KEY_CONNECTIONS + " TEXT, " + 
                 KEY_BYTES_RECEIVED + " REAL, " + 
-                KEY_BYTES_TRANSMITTED + " REAL)";
+                KEY_BYTES_TRANSMITTED + " REAL, " + KEY_RECEIVED_SMS + " INT)";
 
 
 	public FeatureDataOpenHelper(Context context) {
@@ -88,6 +90,7 @@ public class FeatureDataOpenHelper extends SQLiteOpenHelper {
 	    values.put(KEY_CONNECTIONS, instance.getConnections());
 	    values.put(KEY_BYTES_RECEIVED, instance.getBytesReceived());
 	    values.put(KEY_BYTES_TRANSMITTED, instance.getBytesTransmitted());
+        values.put(KEY_RECEIVED_SMS, instance.getTotalSMSReceived());
 	    //Log.v("DEBUG", values.toString());
 	 
 	    // Inserting Row
@@ -125,6 +128,7 @@ public class FeatureDataOpenHelper extends SQLiteOpenHelper {
 	        	record.setConnections(cursor.getString(13));
 	        	record.setBytesReceived(new BigDecimal(cursor.getString(14)).longValue());
 	        	record.setBytesTransmitted(new BigDecimal(cursor.getString(15)).longValue());
+                record.setTotalSMSReceived(Integer.parseInt(cursor.getString(16)));
 	            // Adding contact to list
 	        	recordList.add(record);
 	        } while (cursor.moveToNext());
@@ -150,13 +154,18 @@ public class FeatureDataOpenHelper extends SQLiteOpenHelper {
     }*/
 
 	public Long getLastBytesReceived() {
-	    String query = "SELECT KEY_BYTES_RECEIVED FROM TABLE ORDER BY ID DESC LIMIT 1";
+	    //String query = "SELECT Bytes_Received FROM TABLE ORDER BY ID DESC LIMIT 1";
 	 
 	    SQLiteDatabase db = this.getWritableDatabase();
-	    Cursor cursor = db.rawQuery(query, null);
+	    //Cursor cursor = db.rawQuery(query, null);
+
+        String[] columns = {KEY_BYTES_RECEIVED};
+        String orderBy = "ID DESC";
+        String limit = "1";
+        Cursor cursor = db.query(TABLE_FEATURES, columns, null,null, null, null, orderBy, limit);
 	 
 	    if (cursor.moveToFirst()) {
-	    	return (new BigDecimal(cursor.getString(14)).longValue());
+	    	return (new BigDecimal(cursor.getString(0)).longValue());
 	    }
 	    else{
 	    	Log.d("ERROR", "No sql cell found");
@@ -165,17 +174,42 @@ public class FeatureDataOpenHelper extends SQLiteOpenHelper {
 	}
 	
 	public Long getLastBytesTransmitted() {
-	    String query = "SELECT KEY_BYTES_TRANSMITTED FROM TABLE ORDER BY ID DESC LIMIT 1";
+	    //String query = "SELECT Bytes_Transmitted FROM TABLE ORDER BY ID DESC LIMIT 1";
 	 
 	    SQLiteDatabase db = this.getWritableDatabase();
-	    Cursor cursor = db.rawQuery(query, null);
+	    //Cursor cursor = db.rawQuery(query, null);
+
+        String[] columns = {KEY_BYTES_TRANSMITTED};
+        String orderBy = "ID DESC";
+        String limit = "1";
+        Cursor cursor = db.query(TABLE_FEATURES, columns, null,null, null, null, orderBy, limit);
 	 
 	    if (cursor.moveToFirst()) {
-	    	return (new BigDecimal(cursor.getString(15)).longValue());
+	    	return (new BigDecimal(cursor.getString(0)).longValue());
 	    }
 	    else{
 	    	Log.d("ERROR", "No sql cell found");
 	    	return null;
 	    }
 	}
+
+    public int getLastTotalSMSReceived() {
+        //String query = "SELECT Received_SMS FROM TABLE ORDER BY ID DESC LIMIT 1";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        //Cursor cursor = db.rawQuery(query, null);
+
+        String[] columns = {KEY_RECEIVED_SMS};
+        String orderBy = "ID DESC";
+        String limit = "1";
+        Cursor cursor = db.query(TABLE_FEATURES, columns, null,null, null, null, orderBy, limit);
+
+        if (cursor.moveToFirst()) {
+            return Integer.parseInt(cursor.getString(0));
+        }
+        else{
+            Log.d("ERROR", "No sql cell found");
+            return -1;
+        }
+    }
 }
